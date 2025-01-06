@@ -1,4 +1,8 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Text.Json;
+using System.Threading.Tasks;
 using RAStandaloneIntegration.Data;
 
 namespace RAStandaloneIntegration.Network
@@ -100,7 +104,7 @@ namespace RAStandaloneIntegration.Network
         /// <param name="request">Complete URI for the request</param>
         /// <param name="mp">Multipart Form Data to send with the request</param>
         /// <returns></returns>
-        private static async Task<ApiResponse<T>> GetApiResponse<T>(HttpClient client, Uri request, MultipartFormDataContent? mp = default)
+        private static async Task<ApiResponse<T>> GetApiResponse<T>(HttpClient client, Uri request, MultipartFormDataContent mp = default)
         {
             try
             {
@@ -109,7 +113,7 @@ namespace RAStandaloneIntegration.Network
                 string content = await response.Content.ReadAsStringAsync();
                 // Console.WriteLine($"Raw API response: {content}");
 
-                T? data = JsonSerializer.Deserialize<T>(content);
+                T data = JsonSerializer.Deserialize<T>(content);
                 if (data == null)
                     return ApiResponse<T>.Failed($"Deserialized JSON response is null");
                 return ApiResponse<T>.Succeded(data);

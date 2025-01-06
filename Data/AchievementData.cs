@@ -1,6 +1,7 @@
 ﻿namespace RAStandaloneIntegration.Data
 {
-    // Output out Edit > Paste Special > Paste JSON as classes
+    // Output out Edit > Paste Special > Paste JSON as classes (renamed for accuracy)
+
     /// <summary>
     /// Used to idenity a game on RA<br/><br/>
     /// 
@@ -17,7 +18,7 @@
         /// <summary>
         /// Name of the game
         /// </summary>
-        public string? Name { get; set; }
+        public string Name { get; set; }
     }
 
     /// <summary>
@@ -31,12 +32,12 @@
         /// <summary>
         /// Title of the achievement
         /// </summary>
-        public string? Title { get; set; }
+        public string Title { get; set; }
 
         /// <summary>
         /// Description of the achievement
         /// </summary>
-        public string? Description { get; set; }
+        public string Description { get; set; }
 
         /// <summary>
         /// Points of the achievement<br/>
@@ -48,7 +49,7 @@
         /// Type of the achievement<br/>
         /// Must be missable, progression, or win_condition; "" if none
         /// </summary>
-        public string? Type { get; set; }
+        public string Type { get; set; }
 
         /// <summary>
         /// Category of the achievement<br/>
@@ -64,11 +65,11 @@
         /// <summary>
         /// Badge ID of the achievement; "00000" is teh default badge
         /// </summary>
-        public string? Badge { get; set; }
+        public string Badge { get; set; }
 
         /// <summary>
         /// Subset that the achievement is in; "" if none
         /// </summary>
-        public string? Subset { get; set; }
+        public string Subset { get; set; }
     }
 }

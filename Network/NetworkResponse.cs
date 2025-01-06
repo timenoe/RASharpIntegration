@@ -1,4 +1,6 @@
-﻿using System.Text.Json.Serialization;
+﻿using System;
+using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace RAStandaloneIntegration.Network
 {
@@ -8,12 +10,12 @@ namespace RAStandaloneIntegration.Network
     /// <typeparam name="T">Type of the response</typeparam>
     /// <param name="response">Deserialized response</param>
     /// <param name="failure">Failure message; "" if none</param>
-    public class ApiResponse<T>(T? response, string failure = "")
+    public class ApiResponse<T>(T response, string failure = "")
     {
         /// <summary>
         /// Deserialized response
         /// </summary>
-        public T? Response = response;
+        public T Response = response;
 
         /// <summary>
         /// Failure message; "" if none
@@ -68,7 +70,7 @@ namespace RAStandaloneIntegration.Network
         /// Error message if applicable
         /// </summary>
         [JsonPropertyName("Error")]
-        public string? Error { get; set; }
+        public string Error { get; set; }
     }
 
     /// <summary>
@@ -126,19 +128,19 @@ namespace RAStandaloneIntegration.Network
         /// Can be Spam, Banned, Unregistered, Registered, Junior Developer, Developer, Moderator, or Invalid permission
         /// </summary>
         [JsonPropertyName("AccountType")]
-        public string? AccountType { get; set; }
+        public string AccountType { get; set; }
 
         /// <summary>
         /// Connect token
         /// </summary>
         [JsonPropertyName("Token")]
-        public string? Token { get; set; }
+        public string Token { get; set; }
 
         /// <summary>
         /// User name
         /// </summary>
         [JsonPropertyName("User")]
-        public string? User { get; set; }
+        public string User { get; set; }
     }
 
     /// <summary>
@@ -168,7 +170,7 @@ namespace RAStandaloneIntegration.Network
         /// Hardcore unlock timestamps for the game
         /// </summary>
         [JsonPropertyName("HardcoreUnlocks")]
-        public HardcoreUnlock[]? HardcoreUnlocks { get; set; }
+        public HardcoreUnlock[] HardcoreUnlocks { get; set; }
 
         /// <summary>
         /// Used to identify a hardcore unlock timestamp
@@ -267,13 +269,13 @@ namespace RAStandaloneIntegration.Network
         /// Achievement IDs that were already unlocked
         /// </summary>
         [JsonPropertyName("ExistingIDs")]
-        public List<int>? ExistingIds { get; set; }
+        public List<int> ExistingIds { get; set; }
 
         /// <summary>
         /// Achievement IDs that were successfully unlocked
         /// </summary>
         [JsonPropertyName("SuccessfulIDs")]
-        public List<int>? SuccessfulIds { get; set; }
+        public List<int> SuccessfulIds { get; set; }
     }
 
     /// <summary>
