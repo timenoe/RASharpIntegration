@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using RAStandaloneIntegration.Data;
+using RASharpIntegration.Data;
 
-namespace RAStandaloneIntegration.Network
+namespace RASharpIntegration.Network
 {
     /// <summary>
     /// Interface to send API requests and get the reponse from RA

@@ -1,3 +1,3 @@
-# RAStandaloneIntegration
+# RASharpIntegration
 
-Library to integrate a standalone client with RetroAchievements
+C# Library to integrate a standalone client with RetroAchievements

@@ -6,9 +6,9 @@ using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
-using RAStandaloneIntegration.Data;
+using RASharpIntegration.Data;
 
-namespace RAStandaloneIntegration.Network
+namespace RASharpIntegration.Network
 {
     /// <summary>
     /// Information that is commonly used in requests to RA

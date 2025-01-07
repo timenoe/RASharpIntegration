@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text.Json.Serialization;
 
-namespace RAStandaloneIntegration.Network
+namespace RASharpIntegration.Network
 {
     /// <summary>
     /// Generic API response from RA

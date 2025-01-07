@@ -1,4 +1,4 @@
-﻿namespace RAStandaloneIntegration.Data
+﻿namespace RASharpIntegration.Data
 {
     // Output out Edit > Paste Special > Paste JSON as classes (renamed for accuracy)
 
