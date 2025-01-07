@@ -30,11 +30,10 @@ namespace RAStandaloneIntegration.Network
         /// </summary>
         /// <param name="client">HTTP client to send the request from</param>
         /// <param name="header">Request header containing the host, user, and token</param>
-        /// <param name="game">Game ID</param>
         /// <returns>RA API response from a start session request</returns>
-        public static async Task<ApiResponse<StartSessionResponse>> TryStartSession(HttpClient client, RequestHeader header, int game)
+        public static async Task<ApiResponse<StartSessionResponse>> TryStartSession(HttpClient client, RequestHeader header)
         {
-            Uri request = NetworkRequest.BuildStartSessionRequest(header, game);
+            Uri request = NetworkRequest.BuildStartSessionRequest(header);
             return await GetApiResponse<StartSessionResponse>(client, request);
         }
 
@@ -43,12 +42,11 @@ namespace RAStandaloneIntegration.Network
         /// </summary>
         /// <param name="client">HTTP client to send the request from</param>
         /// <param name="header">Request header containing the host, user, and token</param>
-        /// <param name="game">Game ID</param>
         /// <param name="rp">Rich presence</param>
         /// <returns></returns>
-        public static async Task<ApiResponse<BaseResponse>> TryPing(HttpClient client, RequestHeader header, int game, string rp)
+        public static async Task<ApiResponse<BaseResponse>> TryPing(HttpClient client, RequestHeader header, string rp)
         {
-            Uri request = NetworkRequest.BuildPingRequest(header, game, rp, out MultipartFormDataContent multipart);
+            Uri request = NetworkRequest.BuildPingRequest(header, rp, out MultipartFormDataContent multipart);
             return await GetApiResponse<BaseResponse>(client, request, multipart);
         }
 
@@ -58,11 +56,10 @@ namespace RAStandaloneIntegration.Network
         /// <param name="client">HTTP client to send the request from</param>
         /// <param name="header">Request header containing the host, user, and token</param>
         /// <param name="ach">Achievement ID</param>
-        /// <param name="hardcore"></param>
         /// <returns></returns>
-        public static async Task<ApiResponse<AwardAchievementResponse>> TryAwardAchievement(HttpClient client, RequestHeader header, int ach, bool hardcore)
+        public static async Task<ApiResponse<AwardAchievementResponse>> TryAwardAchievement(HttpClient client, RequestHeader header, int ach)
         {
-            Uri request = NetworkRequest.BuildAwardAchievementRequest(header, hardcore, ach);
+            Uri request = NetworkRequest.BuildAwardAchievementRequest(header, ach);
             return await GetApiResponse<AwardAchievementResponse>(client, request);
         }
 
@@ -73,11 +70,10 @@ namespace RAStandaloneIntegration.Network
         /// <param name="client">HTTP client to send the request from</param>
         /// <param name="header">Request header containing the host, user, and token</param>
         /// <param name="achs">Achievement IDs</param>
-        /// <param name="hardcore">Hardcore status</param>
         /// <returns></returns>
-        public static async Task<ApiResponse<AwardAchievementsResponse>> TryAwardAchievements(HttpClient client, RequestHeader header, List<int> achs, bool hardcore)
+        public static async Task<ApiResponse<AwardAchievementsResponse>> TryAwardAchievements(HttpClient client, RequestHeader header, List<int> achs)
         {
-            Uri request = NetworkRequest.BuildAwardAchievementsRequest(header, hardcore, achs, out MultipartFormDataContent multipart);
+            Uri request = NetworkRequest.BuildAwardAchievementsRequest(header, achs, out MultipartFormDataContent multipart);
             return await GetApiResponse<AwardAchievementsResponse>(client, request, multipart);
         }
 
@@ -90,9 +86,9 @@ namespace RAStandaloneIntegration.Network
         /// <param name="game">Game ID</param>
         /// <param name="ach">Achievement information</param>
         /// <returns></returns>
-        public static async Task<ApiResponse<UploadAchievementResponse>> TryUploadAchievement(HttpClient client, RequestHeader header, int game, RaAchievement ach)
+        public static async Task<ApiResponse<UploadAchievementResponse>> TryUploadAchievement(HttpClient client, RequestHeader header, RaAchievement ach)
         {
-            Uri request = NetworkRequest.BuildUploadAchievementRequest(header, game, ach);
+            Uri request = NetworkRequest.BuildUploadAchievementRequest(header, ach);
             return await GetApiResponse<UploadAchievementResponse>(client, request);
         }
 

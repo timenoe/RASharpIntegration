@@ -11,14 +11,18 @@ using RAStandaloneIntegration.Data;
 namespace RAStandaloneIntegration.Network
 {
     /// <summary>
-    /// Information that is included in every request to RA
+    /// Information that is commonly used in requests to RA
     /// </summary>
     /// <param name="host">Host name</param>
+    /// <param name="game">Game ID</param>
+    /// <param name="hardcore">Hardcore status</param>
     /// <param name="user">User name</param>
     /// <param name="token">Connect token</param>
-    public class RequestHeader(string host, string user, string token = "")
+    public class RequestHeader(string host, int game = 0, bool hardcore = false, string user = "", string token = "")
     {
         public string host = host;
+        public int game = game;
+        public bool hardcore = hardcore;
         public string user = user;
         public string token = token;
     }
@@ -31,7 +35,7 @@ namespace RAStandaloneIntegration.Network
         /// <summary>
         /// Build a URI for a login2 request
         /// </summary>
-        /// <param name="header">Request header containing the host and user</param>
+        /// <param name="header">Request header containing common required parameters</param>
         /// <param name="pass">User password</param>
         /// <returns>Complete URI for a login2 request</returns>
         public static Uri BuildLoginRequest(RequestHeader header, string pass)
@@ -49,10 +53,9 @@ namespace RAStandaloneIntegration.Network
         /// <summary>
         /// Build a URI for a startsession request
         /// </summary>
-        /// <param name="header">Request header containing the host, user, and token</param>
-        /// <param name="game">Game ID</param>
+        /// <param name="header">Request header containing common required parameters</param>
         /// <returns>Complete URI for a startsession request</returns>
-        public static Uri BuildStartSessionRequest(RequestHeader header, int game)
+        public static Uri BuildStartSessionRequest(RequestHeader header)
         {
             UriBuilder builder = new($"https://{header.host}/dorequest.php");
             NameValueCollection parameters = HttpUtility.ParseQueryString(string.Empty);
@@ -60,7 +63,7 @@ namespace RAStandaloneIntegration.Network
             parameters["u"] = header.user;
             parameters["t"] = header.token;
             parameters["r"] = "startsession";
-            parameters["g"] = game.ToString();
+            parameters["g"] = header.game.ToString();
             builder.Query = parameters.ToString();
             return builder.Uri;
         }
@@ -68,12 +71,11 @@ namespace RAStandaloneIntegration.Network
         /// <summary>
         /// Build a URI for a ping request
         /// </summary>
-        /// <param name="header">Request header containing the host, user, and token</param>
-        /// <param name="game">Game ID</param>
+        /// <param name="header">Request header containing common required parameters</param>
         /// <param name="rp">Rich presence</param>
         /// <param name="mp">Multipart Form Data for the rich presence</param>
         /// <returns>Complete URI for a ping request</returns>
-        public static Uri BuildPingRequest(RequestHeader header, int game, string rp, out MultipartFormDataContent mp)
+        public static Uri BuildPingRequest(RequestHeader header, string rp, out MultipartFormDataContent mp)
         {
             UriBuilder builder = new($"https://{header.host}/dorequest.php");
             mp = [];
@@ -82,7 +84,7 @@ namespace RAStandaloneIntegration.Network
             parameters["u"] = header.user;
             parameters["t"] = header.token;
             parameters["r"] = "ping";
-            parameters["g"] = game.ToString();
+            parameters["g"] = header.game.ToString();
             mp.Add(new StringContent(rp), "m");
             builder.Query = parameters.ToString();
             return builder.Uri;
@@ -91,11 +93,10 @@ namespace RAStandaloneIntegration.Network
         /// <summary>
         /// Build a URI for a awardachievement request
         /// </summary>
-        /// <param name="header">Request header containing the host, user, and token</param>
-        /// <param name="hardcore">Hardcore status</param>
+        /// <param name="header">Request header containing common required parameters</param>
         /// <param name="ach">Achievement ID</param>
         /// <returns>Complete URI for an awardachievement request</returns>
-        public static Uri BuildAwardAchievementRequest(RequestHeader header, bool hardcore, int ach)
+        public static Uri BuildAwardAchievementRequest(RequestHeader header, int ach)
         {
             UriBuilder builder = new($"https://{header.host}/dorequest.php");
             NameValueCollection parameters = HttpUtility.ParseQueryString(string.Empty);
@@ -103,9 +104,9 @@ namespace RAStandaloneIntegration.Network
             parameters["u"] = header.user;
             parameters["t"] = header.token;
             parameters["r"] = "awardachievement";
-            parameters["h"] = hardcore ? "1" : "0";
+            parameters["h"] = header.hardcore ? "1" : "0";
             parameters["a"] = ach.ToString();
-            parameters["v"] = GenerateVerifyMD5($"{ach}{header.user}{hardcore}{ach}");
+            parameters["v"] = GenerateVerifyMD5($"{ach}{header.user}{header.hardcore}{ach}");
             builder.Query = parameters.ToString();
             return builder.Uri;
         }
@@ -113,12 +114,11 @@ namespace RAStandaloneIntegration.Network
         /// <summary>
         /// Build a URI for a awardachievements request
         /// </summary>
-        /// <param name="header">Request header containing the host, user, and token</param>
-        /// <param name="hardcore">Hardcore status</param>
+        /// <param name="header">Request header containing common required parameters</param>
         /// <param name="achs">Achievement ID</param>
         /// <param name="mp">Multipart Form Data for the achievement unlocks</param>
         /// <returns>Complete URI for an awardachievements request</returns>
-        public static Uri BuildAwardAchievementsRequest(RequestHeader header, bool hardcore, List<int> achs, out MultipartFormDataContent mp)
+        public static Uri BuildAwardAchievementsRequest(RequestHeader header, List<int> achs, out MultipartFormDataContent mp)
         {
             UriBuilder builder = new($"https://{header.host}/dorequest.php");
             mp = [];
@@ -127,9 +127,9 @@ namespace RAStandaloneIntegration.Network
             parameters["u"] = header.user;
             parameters["t"] = header.token;
             parameters["r"] = "awardachievements";
-            mp.Add(new StringContent(hardcore ? "1" : "0"), "h");
+            mp.Add(new StringContent(header.hardcore ? "1" : "0"), "h");
             mp.Add(new StringContent(string.Join(",", achs)), "a");
-            mp.Add(new StringContent(GenerateVerifyMD5($"{achs}{header.user}{hardcore}")), "v");
+            mp.Add(new StringContent(GenerateVerifyMD5($"{achs}{header.user}{header.hardcore}")), "v");
             builder.Query = parameters.ToString();
             return builder.Uri;
         }
@@ -137,11 +137,10 @@ namespace RAStandaloneIntegration.Network
         /// <summary>
         /// Build a URI for a uploadachievement request<br/>
         /// </summary>
-        /// <param name="header">Request header containing the host, user, and token</param>
-        /// <param name="game">Game ID</param>
+        /// <param name="header">Request header containing common required parameters</param>
         /// <param name="ach">Achievement information</param>
         /// <returns>Complete URI for an uploadachievement request</returns>
-        public static Uri BuildUploadAchievementRequest(RequestHeader header, int game, RaAchievement ach)
+        public static Uri BuildUploadAchievementRequest(RequestHeader header, RaAchievement ach)
         {
             UriBuilder builder = new($"https://{header.host}/dorequest.php");
             NameValueCollection parameters = HttpUtility.ParseQueryString(string.Empty);
@@ -149,7 +148,7 @@ namespace RAStandaloneIntegration.Network
             parameters["u"] = header.user;
             parameters["t"] = header.token;
             parameters["r"] = "uploadachievement";
-            parameters["g"] = game.ToString();
+            parameters["g"] = header.game.ToString();
             parameters["n"] = ach.Title;
             parameters["d"] = ach.Description;
             parameters["z"] = ach.Points.ToString();
