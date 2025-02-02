@@ -63,13 +63,13 @@
         public int Id { get; set; }
 
         /// <summary>
-        /// Badge ID of the achievement; "00000" is teh default badge
+        /// Badge ID of the achievement; "00000" is the default badge
         /// </summary>
         public string Badge { get; set; }
 
         /// <summary>
-        /// Subset that the achievement is in; "" if none
+        /// Game ID of the set that the achievement is in
         /// </summary>
-        public string Subset { get; set; }
+        public int Set { get; set; }
     }
 }
