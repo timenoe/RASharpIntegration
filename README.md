@@ -2,7 +2,9 @@
 
 C# Library to integrate a standalone client with RetroAchievements.
 
-[Unit Tests](https://github.com/timenoe/RASharpIntegrationTests)
+Target Frameworks: `.NET 5.0, .NET 6.0, .NET 7.0, .NET 8.0, .NET 9.0`
+
+Unit tests are located at [RASharpIntegration Tests](https://github.com/timenoe/RASharpIntegrationTests).
 
 ## How to Use
 
