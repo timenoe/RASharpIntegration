@@ -2,6 +2,8 @@
 
 C# Library to integrate a standalone client with RetroAchievements.
 
+[Unit Tests](https://github.com/timenoe/RASharpIntegrationTests)
+
 ## How to Use
 
 1. Add this repository as a submodule to your C# project.
