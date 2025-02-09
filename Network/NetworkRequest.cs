@@ -13,12 +13,12 @@ namespace RASharpIntegration.Network
     /// <summary>
     /// Information that is commonly used in requests to RA
     /// </summary>
-    /// <param name="host">Host name</param>
+    /// <param name="host">Host name (retroachievements.org, etc.)</param>
     /// <param name="game">Game ID</param>
     /// <param name="hardcore">Hardcore status</param>
     /// <param name="user">User name</param>
     /// <param name="token">Connect token</param>
-    public class RequestHeader(string host, int game = 0, bool hardcore = false, string user = "", string token = "")
+    public class RequestHeader(string host, int game, bool hardcore, string user = "", string token = "")
     {
         public string host = host;
         public int game = game;
