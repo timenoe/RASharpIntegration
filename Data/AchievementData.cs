@@ -19,6 +19,12 @@
         /// Name of the game
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// IDs of the sets associated with this game<br/>
+        /// Includes the base set and any subsets
+        /// </summary>
+        public int[] Sets { get; set; }
     }
 
     /// <summary>
