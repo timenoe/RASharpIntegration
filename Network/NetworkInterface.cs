@@ -31,9 +31,9 @@ namespace RASharpIntegration.Network
         /// <param name="client">HTTP client to send the request from</param>
         /// <param name="header">Request header containing the host, user, and token</param>
         /// <returns>RA API response from a start session request</returns>
-        public static async Task<ApiResponse<StartSessionResponse>> TryStartSession(HttpClient client, RequestHeader header)
+        public static async Task<ApiResponse<StartSessionResponse>> TryStartSession(HttpClient client, RequestHeader header, int game)
         {
-            Uri request = NetworkRequest.BuildStartSessionRequest(header);
+            Uri request = NetworkRequest.BuildStartSessionRequest(header, game);
             return await GetApiResponse<StartSessionResponse>(client, request);
         }
 

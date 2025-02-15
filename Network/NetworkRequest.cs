@@ -54,8 +54,9 @@ namespace RASharpIntegration.Network
         /// Build a URI for a startsession request
         /// </summary>
         /// <param name="header">Request header containing common required parameters</param>
+        /// <param name="game">Game ID</param>
         /// <returns>Complete URI for a startsession request</returns>
-        public static Uri BuildStartSessionRequest(RequestHeader header)
+        public static Uri BuildStartSessionRequest(RequestHeader header, int game)
         {
             UriBuilder builder = new($"https://{header.host}/dorequest.php");
             NameValueCollection parameters = HttpUtility.ParseQueryString(string.Empty);
@@ -63,7 +64,7 @@ namespace RASharpIntegration.Network
             parameters["u"] = header.user;
             parameters["t"] = header.token;
             parameters["r"] = "startsession";
-            parameters["g"] = header.game.ToString();
+            parameters["g"] = game.ToString();
             builder.Query = parameters.ToString();
             return builder.Uri;
         }
