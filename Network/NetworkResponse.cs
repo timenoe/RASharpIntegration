@@ -210,7 +210,11 @@ namespace RASharpIntegration.Network
                 if (SoftcoreUnlocks != null)
                 {
                     foreach (AchievementUnlock unlock in SoftcoreUnlocks)
-                        unlockedAchs.Add(unlock.Id);
+                    {
+                        // 101000001 is an out-of-date emulator warning achievement that is always constant
+                        if (unlock.Id != 101000001)
+                            unlockedAchs.Add(unlock.Id);
+                    }
                 }
             }
 
