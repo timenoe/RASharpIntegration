@@ -169,12 +169,18 @@ namespace RASharpIntegration.Network
         /// Hardcore unlock timestamps for the game
         /// </summary>
         [JsonPropertyName("HardcoreUnlocks")]
-        public HardcoreUnlock[] HardcoreUnlocks { get; set; }
+        public AchievementUnlock[] HardcoreUnlocks { get; set; }
+
+        /// <summary>
+        /// Softcore unlock timestamps for the game
+        /// </summary>
+        [JsonPropertyName("Unlocks")]
+        public AchievementUnlock[] SoftcoreUnlocks { get; set; }
 
         /// <summary>
         /// Used to identify a hardcore unlock timestamp
         /// </summary>
-        public class HardcoreUnlock
+        public class AchievementUnlock
         {
             [JsonPropertyName("ID")]
             public int Id { get; set; }
@@ -187,14 +193,27 @@ namespace RASharpIntegration.Network
         /// Get an list of unlocked achievement IDs, disregarding the timestamps
         /// </summary>
         /// <returns>List of unlocked achievement IDs</returns>
-        public List<int> GetUnlockedAchIds()
+        public List<int> GetUnlockedAchIds(bool hardcore)
         {
             List<int> unlockedAchs = [];
-            if (HardcoreUnlocks != null)
+
+            if (hardcore)
             {
-                foreach (HardcoreUnlock unlock in HardcoreUnlocks)
-                    unlockedAchs.Add(unlock.Id);
+                if (HardcoreUnlocks != null)
+                {
+                    foreach (AchievementUnlock unlock in HardcoreUnlocks)
+                        unlockedAchs.Add(unlock.Id);
+                }
             }
+            else
+            {
+                if (SoftcoreUnlocks != null)
+                {
+                    foreach (AchievementUnlock unlock in SoftcoreUnlocks)
+                        unlockedAchs.Add(unlock.Id);
+                }
+            }
+
             return unlockedAchs;
         }
     }
