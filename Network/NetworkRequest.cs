@@ -108,7 +108,7 @@ namespace RASharpIntegration.Network
             parameters["r"] = "awardachievement";
             parameters["h"] = hardcore;
             parameters["a"] = ach.ToString();
-            parameters["v"] = GenerateVerifyMD5($"{ach}{header.user}{hardcore}{ach}");
+            parameters["v"] = GenerateVerifyMD5($"{ach}{header.user}{hardcore}");
             builder.Query = parameters.ToString();
             return builder.Uri;
         }
