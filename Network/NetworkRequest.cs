@@ -102,12 +102,13 @@ namespace RASharpIntegration.Network
             UriBuilder builder = new($"https://{header.host}/dorequest.php");
             NameValueCollection parameters = HttpUtility.ParseQueryString(string.Empty);
 
+            string hardcore = header.hardcore ? "1" : "0";
             parameters["u"] = header.user;
             parameters["t"] = header.token;
             parameters["r"] = "awardachievement";
-            parameters["h"] = header.hardcore ? "1" : "0";
+            parameters["h"] = hardcore;
             parameters["a"] = ach.ToString();
-            parameters["v"] = GenerateVerifyMD5($"{ach}{header.user}{header.hardcore}{ach}");
+            parameters["v"] = GenerateVerifyMD5($"{ach}{header.user}{hardcore}{ach}");
             builder.Query = parameters.ToString();
             return builder.Uri;
         }
@@ -125,12 +126,13 @@ namespace RASharpIntegration.Network
             mp = [];
             NameValueCollection parameters = HttpUtility.ParseQueryString(string.Empty);
 
+            string hardcore = header.hardcore ? "1" : "0";
             parameters["u"] = header.user;
             parameters["t"] = header.token;
             parameters["r"] = "awardachievements";
-            mp.Add(new StringContent(header.hardcore ? "1" : "0"), "h");
+            mp.Add(new StringContent(hardcore), "h");
             mp.Add(new StringContent(string.Join(",", achs)), "a");
-            mp.Add(new StringContent(GenerateVerifyMD5($"{achs}{header.user}{header.hardcore}")), "v");
+            mp.Add(new StringContent(GenerateVerifyMD5($"{achs}{header.user}{hardcore}")), "v");
             builder.Query = parameters.ToString();
             return builder.Uri;
         }

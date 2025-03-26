@@ -52,3 +52,7 @@ private async Task Login(string user, string pass)
     StartSessionCommand.Invoke(this, null);
 }
 ```
+
+## Projects Using This Library
+
+- [Terraria RetroAchievements](https://github.com/timenoe/Terraria-RetroAchievements)
