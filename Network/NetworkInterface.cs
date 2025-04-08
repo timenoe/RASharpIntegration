@@ -116,12 +116,15 @@ namespace RASharpIntegration.Network
             }
 
             // HttpRequestException can occur if the client's internet is down, there are DNS issues, etc.
-            // JsonException can occur if the JSON response from RA is invalid (unlikely)
+            // JsonException can occur if the JSON response from the RA server is invalid
             // There are many other exceptions that could occur in a bad environment
             // In this case, catch all possible exceptions and log as a failure
             // Let the client decide how they want to handle failures
             catch (Exception e)
             {
+                if (e is JsonException)
+                    return ApiResponse<T>.Failed("Invalid server response");
+
                 return ApiResponse<T>.Failed(e.Message);
             }
         }
